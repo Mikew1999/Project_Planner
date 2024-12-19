@@ -1,2 +1,22 @@
 Projects page
 Create Projects
+view Projects
+delete Projects
+
+Project page
+edit project details
+project users
+tasks
+
+Tasks page
+add tasks
+add subtask
+
+Task page
+view task
+edit task
+delete task
+
+
+
+User admin page
