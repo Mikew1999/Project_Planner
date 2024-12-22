@@ -1,13 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects{% endblock %}
+
+<!-- get columns -->
+
+<!-- get filters -->
+
+{% block main %}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            Projects
-            <div class="card">
-                <div class="card-body bg-secondary">
+            <h1 class="display-4 fw-600 lead">Projects</h1>
 
+            <div class="border rounded p-4 table-responsive" style="background-color: #f0f0f0;">
+                <div class="text-end">
+                    <button type="button" id="new_proj_btn" class="btn btn-success rounded">
+                        Create New Project
+                    </button>
                 </div>
+                <table class="table table-hover table-striped-dark table-bordered" id="projects_table">
+                    <thead>
+                        <th>Project Name</th>
+                        <th>Completion %</th>
+                        <th>Edit</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3">
+                                No projects found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="create_project_modal" tabindex="-1" aria-labelledby="create_project_modal_label" aria-hidden="true">
+    
+    <div class="modal-dialog modal-xl">
+      
+        <div class="modal-content">
+
+        <div class="modal-header">
+
+          <h1 class="modal-title fs-5" id="create_project_modal_label">Create Project</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        
+        </div>
+
+        <div class="modal-body">
+
+            <ul id="project_errors" class="list-unstyled"></ul>
+            
+            <div class="row">
+                
+                <div class="col mb-2">
+                    <label for="project_name">
+                        Project Name
+                    </label>
+                    <input type="text" class="form-control proj_input" id="project_name" name="project_name">
+                </div>
+
+            </div>
+            
+            <div class="row">
+                
+                <div class="col mb-2">
+                    <label for="project_descr">
+                        Description
+                    </label>
+                    <textarea class="form-control proj_input" id="project_descr" name="project_descr" rows="7"></textarea>
+                </div>
+
+            </div>
+
+            <div class="row">
+                
+                <div class="col-12 col-md-6 mb-2">
+                    <label for="project_start_date">Start Date</label>
+                    <input type="date" class="form-control proj_input" name="project_start_date" id="project_start_date">
+                </div>
+
+                <div class="col-12 col-md-6 mb-2">
+                    <label for="project_deadline">Deadline</label>
+                    <input type="date" class="form-control proj_input" name="project_deadline" id="project_deadline">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" id="save_new_project">Create project</button>
+        </div>
+
+      </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+    import { get_projects } from "{% static 'js/projects/projects.js' %}";
+
+    $(document).ready(function() {
+        get_projects();
+    });
+</script>
+{% endblock %}
