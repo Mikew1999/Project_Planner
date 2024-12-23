@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project_info.name }}{% endblock %}
+
+{% block main %}
+    <ul class="nav nav-underline" id="myTab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+            <a
+                class="nav-link active"
+                aria-current="page"
+                id="project_details-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#project_details-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="project_details-tab-pane"
+                aria-selected="true">
+                Project Details
+            </a>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="tasks-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tasks-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="tasks-tab-pane"
+                aria-selected="true">
+                Tasks
+            </a>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <a
+                class="nav-link"
+                id="task_lists-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#task_lists-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="task_lists-tab-pane"
+                aria-selected="true">
+                Task Lists
+            </a>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+
+        <div class="tab-pane fade" id="project_details-tab-pane" role="tabpanel" aria-labelledby="project_details-tab" tabindex="0">
+            Project Details
+        </div>
+        
+        <div class="tab-pane fade show active" id="tasks-tab-pane" role="tabpanel" aria-labelledby="tasks-tab" tabindex="0">
+            <h4 class="display-6">Tasks</h4>
+
+            <div class="border rounded p-4 table-responsive" style="background-color: #f0f0f0;">
+                <div class="row">
+                    <div class="col-4">
+                        <label for="task_list_dropdown">
+                            Filter by Task List
+                        </label>
+                        <select class="form-select" id="task_list_dropdown">
+                            <option value="">-- All --</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="text-end mt-3">
+                    <button type="button" id="create_task_btn" class="btn btn-success rounded">
+                        Add Task
+                    </button>
+                </div>
+
+                <table class="table table-hover table-striped-dark table-bordered" id="task_table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                No task lists found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="task_lists-tab-pane" role="tabpanel" aria-labelledby="task_lists-tab" tabindex="0">
+            <h4 class="display-6">Task Lists</h4>
+
+            <div class="border rounded p-4 table-responsive" style="background-color: #f0f0f0;">
+                <div class="text-end">
+                    <button type="button" id="create_list_btn" class="btn btn-success rounded">
+                        Create Task List
+                    </button>
+                </div>
+                <table class="table table-hover table-striped-dark table-bordered" id="task_list_table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                No task lists found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
+            
+        </div>
+        
+      </div>
+
+<!-- Modal -->
+<div class="modal fade" id="task_list_modal" tabindex="-1" aria-labelledby="task_list_modal_label" aria-hidden="true">
+    
+    <div class="modal-dialog modal-xl">
+      
+        <div class="modal-content">
+
+        <div class="modal-header">
+
+          <h1 class="modal-title fs-5" id="task_list_modal_label">Create Task List</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        
+        </div>
+
+        <div class="modal-body">
+
+            <ul id="task_list_errors" class="list-unstyled"></ul>
+
+            <input type="hidden" id="task_list_id" value="0">
+            
+            <div class="row">
+                
+                <div class="col mb-2">
+                    <label for="task_list_name">
+                        Task List Name
+                    </label>
+                    <input type="text" class="form-control task_list_input" id="task_list_name" name="task_list_name">
+                </div>
+
+            </div>
+
+            <div class="row">
+                
+                <div class="col mb-2">
+                    <label for="task_list_colour">
+                        Colour
+                    </label>
+                    <input type="color" class="form-control task_list_input" id="task_list_colour" name="task_list_colour">
+                </div>
+
+            </div>
+            
+            <div class="row">
+                
+                <div class="col mb-2">
+                    <label for="task_list_descr">
+                        Description
+                    </label>
+                    <textarea class="form-control task_list_input" id="task_list_descr" name="task_list_descr" rows="7"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" id="save_task_list">Save</button>
+        </div>
+
+      </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+    import { get_task_lists } from "{% static 'js/tasks/task_lists.js' %}";
+
+    $(document).ready(function() {
+        get_task_lists();
+        $('#task_list_dropdown').select2();
+    });
+</script>
+{% endblock %}

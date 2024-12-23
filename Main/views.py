@@ -18,4 +18,4 @@ def login(request):
         messages.add_message(request, messages.ERROR, "Invalid username or password")
         return render(request, "Main/login.html")
     
-    return redirect("/Projects/")
+    return redirect("Projects:index")

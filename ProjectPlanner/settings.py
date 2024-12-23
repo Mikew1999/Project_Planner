@@ -34,6 +34,7 @@ LOGIN_URL = "/login/"
 # Application definition
 
 INSTALLED_APPS = [
+    'Tasks.apps.TasksConfig',
     'Main.apps.MainConfig',
     'Projects.apps.ProjectsConfig',
     'Users.apps.UsersConfig',

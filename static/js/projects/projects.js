@@ -31,6 +31,44 @@ export function get_projects() {
     })
 }
 
+
+function nav_to_project(id) {
+    // call nav to project endpoint
+    $.ajax({
+        url: "/Projects/nav_to_project",
+        method: "POST",
+        cache: false,
+        data: {
+            'project_id': id,
+            'csrfmiddlewaretoken': getCookie("csrftoken")
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response.success == 1) {
+                window.location.href = "/Projects/project";
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    })
+}
+
+
+$('#projects_table').on('click', 'tr', function(event) {
+    let row_data = projects_table.row(this).data();
+    if (typeof row_data === 'undefined')
+        return;
+
+    if ($(event.target).is('span') || $(event.target).is('img')) {
+
+    } else {
+        nav_to_project(row_data.id);
+    }
+});
+
 function show_create_proj_modal() {
     $('#project_errors').empty();
     $('.proj_input').val("");

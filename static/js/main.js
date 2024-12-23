@@ -13,3 +13,16 @@ export function getCookie(name) {
     }
     return cookieValue;
 }
+
+
+export function handle_errors(message, errors, error_container) {
+    error_container.empty();
+
+    if (errors.length > 0) {
+        errors.forEach(function(error) {
+            error_container.append(`<li class="text-danger">${error}</li>`);
+        });
+        return;
+    }
+    error_container.append(`<li class="text-danger">${message}</li>`);
+}
