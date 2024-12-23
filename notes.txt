@@ -1,18 +1,22 @@
-view Projects
-delete Projects
+Tasks page
+view task
+edit task
+add tasks
+comments
+Allow custom fields in projects and tasks
+Rich text editor
+add subtask
+
 
 Project page
-edit project details
+view / edit project details
 project users
 tasks
 
-Tasks page
-add tasks
-add subtask
-
-Task page
-view task
-edit task
-delete task
-
 User admin page
+
+Different task views:
+    - List
+    - Calendar
+    - Gantt
+    - Timesheets

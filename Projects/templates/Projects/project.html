@@ -49,10 +49,6 @@
             </a>
         </li>
 
-        <li class="nav-item" role="presentation">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-
     </ul>
 
     <div class="tab-content" id="myTabContent">
@@ -87,11 +83,13 @@
                     <thead>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Status</th>
+                        <th>Task List</th>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="2">
-                                No task lists found
+                            <td colspan="4">
+                                No tasks found
                             </td>
                         </tr>
                     </tbody>
@@ -124,10 +122,6 @@
             </div>
         </div>
 
-        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
-            
-        </div>
-        
       </div>
 
 <!-- Modal -->
@@ -199,9 +193,11 @@
 
 <script type="module">
     import { get_task_lists } from "{% static 'js/tasks/task_lists.js' %}";
+    import { get_tasks } from "{% static 'js/tasks/tasks.js' %}";
 
     $(document).ready(function() {
         get_task_lists();
+        get_tasks();
         $('#task_list_dropdown').select2();
     });
 </script>

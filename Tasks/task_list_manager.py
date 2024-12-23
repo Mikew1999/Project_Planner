@@ -75,8 +75,3 @@ def modify_task_list(project_id: int = 0, task_list_id: int = 0, name: str = "",
     result.message = "Success"
 
     return result
-
-
-def find_tasks(task_list_id: int = 0) -> DefaultResult:
-    result = DefaultResult(data = {})
-    return result

@@ -14,7 +14,7 @@ export function setup_task_list_dropdown() {
 
 export function get_task_lists() {
     if (typeof task_list_table !== 'undefined') {
-        $('#task_list_table').DataTable.Destroy();
+        task_list_table.destroy();
         task_list_table = undefined;
     }
 
@@ -78,9 +78,9 @@ function edit_task_list(name, descr, color) {
         cache: false,
         data: {
             'task_list_id': $('#task_list_id').val(),
-            'task_list_name': $('#task_list_name').val().trim(),
-            'task_list_colour': $('#task_list_colour').val(),
-            'task_list_descr': $('#task_list_descr').val().trim(),
+            'task_list_name': name,
+            'task_list_colour': color,
+            'task_list_descr': descr,
             'csrfmiddlewaretoken': getCookie("csrftoken")
         },
         dataType: "json",
